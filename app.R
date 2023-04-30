@@ -9,6 +9,23 @@
 
 # ---- libraries ----
 library(shiny)
+library(RMariaDB)
+
+# Verbindung zur Datenbank herstellen
+con <- dbConnect(RMariaDB::MariaDB(), 
+                 host = "192.168.0.69", 
+                 user = "Reiner", 
+                 password = "91448", 
+                 dbname = "network")
+
+# SQL-Anfrage senden
+result <- dbGetQuery(con, "SELECT alias from People where name = 'Lukas Pohn';")
+
+print(result)
+
+# Verbindung schließen
+dbDisconnect(con)
+
 
 # ---- source ----
 source("lib/functions.R")
