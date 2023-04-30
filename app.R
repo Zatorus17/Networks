@@ -33,7 +33,14 @@ ui <- fluidPage(
       ),
       
       tabPanel("Tab 2",
-               checkboxInput("checkbox_input", "Klicken Sie hier, um fortzufahren")
+               checkboxInput("checkbox_input", "Klicken Sie hier, um fortzufahren"),
+               
+               # input field
+               textInput("input_message", "write something"),
+               
+               # popup button
+               actionButton("popup_button", "show popup")
+               
       ),
       
       tabPanel("Tab 3",
@@ -72,6 +79,18 @@ server <- function(input, output) {
            main = "Histogram of waiting times")
       
     })
+    
+    # example popup button
+    observeEvent(input$popup_button, {
+      showModal(
+        modalDialog(
+          title = "important popup",
+          paste(input$input_message, ", du Mongo!")
+        )
+      )
+    })
+    
+    
 }
 
 # ---- Run the application ----

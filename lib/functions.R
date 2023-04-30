@@ -2,6 +2,7 @@
 #' @param query (string) SQL
 #'
 #' @return result from database
+#' @example "SELECT alias from People where name = 'Lukas Pohn';"
 dbQuery <- function (query) {
   # connect to database
   con <- dbConnect(RMariaDB::MariaDB(), 
