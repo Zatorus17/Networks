@@ -66,47 +66,48 @@ server <- function(input, output) {
   output$distPlot <- renderPlot({
     # generate bins based on input$bins from ui.R
     x    <- faithful[, 2]
-    bins <- seq(min(x), max(x), length.out = input$bins + 1)
+    bins <- seq(min(x), max(x), length.out = input$bins + 1) 
+  })
     
 
 
-      # output table for third tab
-    output$peopleTable <- renderDT(
-      dbQuery("SELECT * FROM People"),
-      options = list(pageLength = 10),
-      callback = JS(
-        "table.on('dblclick', 'tr', function() {
-        var data = table.row(this).data();
-        Shiny.setInputValue('dblclicked_row', data);
-      });"
-      )
+    # output table for third tab
+  output$peopleTable <- renderDT(
+    dbQuery("SELECT * FROM People"),
+    options = list(pageLength = 10),
+    callback = JS(
+      "table.on('dblclick', 'tr', function() {
+      var data = table.row(this).data();
+      Shiny.setInputValue('dblclicked_row', data);
+    });"
     )
+  )
   
   # register callback function for double-clicking rows
   observeEvent(input$dblclicked_row, {
     row_dblclicked(input$dblclicked_row)
   })
     
-    output$distPlot <- renderPlot({
-      
-      x    <- faithful$waiting
-      bins <- seq(min(x), max(x), length.out = input$bins + 1)
-      
-      hist(x, breaks = bins, col = "#007bc2", border = "white",
-           xlab = "Waiting time to next eruption (in mins)",
-           main = "Histogram of waiting times")
-      
-    })
+  output$distPlot <- renderPlot({
     
-    # example popup button
-    observeEvent(input$popup_button, {
-      showModal(
-        modalDialog(
-          title = "important popup",
-          paste(input$input_message, ", du Mongo!")
-        )
+    x    <- faithful$waiting
+    bins <- seq(min(x), max(x), length.out = input$bins + 1)
+    
+    hist(x, breaks = bins, col = "#007bc2", border = "white",
+         xlab = "Waiting time to next eruption (in mins)",
+         main = "Histogram of waiting times")
+    
+  })
+    
+  # example popup button
+  observeEvent(input$popup_button, {
+    showModal(
+      modalDialog(
+        title = "important popup",
+        paste(input$input_message, ", du Mongo!")
       )
-    })
+    )
+  })
     
     
 }
